@@ -29,7 +29,7 @@ public class OrbitShip : Player
 			Transform dron = drons.GetChild(i);
 			dron.gameObject.SetActive(true);
 
-			dron.GetComponent<Weapons>().StartWeapon();
+			dron.GetComponent<SimpleWeapons>().StartWeapon();
 		}
 	}
 
@@ -56,7 +56,7 @@ public class OrbitShip : Player
 
 		for (int i = 0; i < drons.childCount; ++i)
 		{
-			drons.GetChild(i).GetComponent<Weapons>().StopWeapon();
+			drons.GetChild(i).GetComponent<SimpleWeapons>().StopWeapon();
 			drons.GetChild(i).gameObject.SetActive(false);
 		}
 	}
@@ -67,7 +67,7 @@ public class OrbitShip : Player
 
 		for (int i = 0; i < orbit.childCount; ++i)
 		{
-			orbit.GetChild(i).GetChild(0).GetComponent<Weapons>().StopWeapon();
+			orbit.GetChild(i).GetChild(0).GetComponent<SimpleWeapons>().StopWeapon();
 			orbit.GetChild(i).gameObject.SetActive(false);
 		}
 	}

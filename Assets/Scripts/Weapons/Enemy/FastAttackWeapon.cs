@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// Periodically performs a quick series of attacks.
 /// </summary>
-public class FastAttack : Weapons
+public class FastAttackWeapon : SimpleWeapons
 {
 	[SerializeField] private int numberAttack = 3;  // Number of attacks before next volley.
 	[SerializeField] private float intervalAttack = 0.3f;  // Interval bw attacks.

@@ -89,7 +89,7 @@ public class EnemyMinions : Enemy
 	{
 		for(int i = 0; i < this.gameObject.transform.childCount; ++i)
 		{
-			Weapons wp = this.gameObject.transform.GetChild(i).GetComponent<Weapons>();
+			IWeapon wp = this.gameObject.transform.GetChild(i).GetComponent<IWeapon>();
 			if(wp != null)
 				wp.StartWeapon();
 		}

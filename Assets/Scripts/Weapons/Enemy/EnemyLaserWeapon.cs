@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyLaserWeapon : Weapons
+public class EnemyLaserWeapon : SimpleWeapons
 {
 	[SerializeField] protected int changeOfShot = 10;
 	

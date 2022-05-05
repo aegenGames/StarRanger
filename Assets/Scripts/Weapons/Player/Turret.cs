@@ -5,7 +5,7 @@ using UnityEngine;
 /// Оружие игрока, выполняющее атаки самонаводящимися снарядами
 /// Weapon of playe attacking with homing projectiles
 /// </summary>
-public class Turret : Weapons
+public class Turret : SimpleWeapons
 {
 	private float coefSpeedUp = 1;
 	private int numberRocket = 0;

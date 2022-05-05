@@ -5,7 +5,7 @@ using UnityEngine;
 /// Spray weapon.
 /// Analog weapon from of "Contra")
 /// </summary>
-public class S : Weapons
+public class S : SimpleWeapons
 {
 	public override void Weapon()
 	{

@@ -40,11 +40,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 4850121407414218875}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8620a3fd1137e5c41bdb97a479ba299c, type: 3}
+  m_Script: {fileID: 11500000, guid: 835e619940a457746ad3a6aca28d1a88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 0}
   repeatRate: 3
-  changeOfShot: 100
-  targetTag: 
-  dmg: 0

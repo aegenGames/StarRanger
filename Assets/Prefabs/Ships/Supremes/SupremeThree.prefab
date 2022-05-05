@@ -160,7 +160,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6372524966163931993, guid: cccc1508b15597b46a2c08a8bf6ee851, type: 3}
       propertyPath: repeatRate
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6372524966163931993, guid: cccc1508b15597b46a2c08a8bf6ee851, type: 3}
       propertyPath: prefabEnemy

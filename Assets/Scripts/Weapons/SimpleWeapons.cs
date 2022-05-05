@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Weapons : MonoBehaviour
+public class SimpleWeapons : MonoBehaviour, IWeapon
 {
 	[SerializeField] private Ammunition prefab;
 	[SerializeField] protected float repeatRate = 3;

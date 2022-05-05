@@ -31,7 +31,7 @@ public class EnemyBoss : Enemy
 		Transform weapons = this.transform.Find(nameObject);
 		for (int i = 0; i < weapons.childCount; ++i)
 		{
-			weapons.GetChild(i).GetComponent<Weapons>().StartWeapon();
+			weapons.GetChild(i).GetComponent<SimpleWeapons>().StartWeapon();
 		}
 	}
 
@@ -40,7 +40,7 @@ public class EnemyBoss : Enemy
 		Transform weapons = this.transform.Find(nameObject);
 		for (int i = 0; i < weapons.childCount; ++i)
 		{
-			weapons.GetChild(i).GetComponent<Weapons>().StopWeapon();
+			weapons.GetChild(i).GetComponent<SimpleWeapons>().StopWeapon();
 		}
 	}
 }

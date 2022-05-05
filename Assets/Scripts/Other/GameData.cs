@@ -1,17 +1,17 @@
 public static class GameData
 {
 	// Game options
-	public static int lvlOne = 1;
-	public static int lvlTwo = 0;
-	public static int lvlThree = 0;
-	public static int lvlFour = 0;
+	public static int lvlOne;
+	public static int lvlTwo;
+	public static int lvlThree;
+	public static int lvlFour;
 
-	public static int dmgOne = 50;
-	public static int dmgTwo = 100;
-	public static int dmgThree = 0;
-	public static int dmgFour = 0;
+	public static int dmgOne;
+	public static int dmgTwo;
+	public static int dmgThree;
+	public static int dmgFour;
 
-	public static int credits = 0;
+	public static int credits;
 
 	public static void ResetGame()
 	{

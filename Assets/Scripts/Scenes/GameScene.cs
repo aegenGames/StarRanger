@@ -27,6 +27,8 @@ public class GameScene : MonoBehaviour
 			GetCurvesPath();
 		}
 
+		GameData.ResetGame();
+
 		player.MoveBorders();
 		StartPlayerWeapon();
 		player.Killed += EndGame;

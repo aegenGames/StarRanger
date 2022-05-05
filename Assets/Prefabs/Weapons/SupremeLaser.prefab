@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8698253656400526329}
   - component: {fileID: -4005656242253863799}
   m_Layer: 9
-  m_Name: SuptemeLaser
+  m_Name: SupremeLaser
   m_TagString: EnemyWeapons
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

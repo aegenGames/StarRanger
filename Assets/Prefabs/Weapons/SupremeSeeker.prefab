@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -7006582222310678795}
   - component: {fileID: -996734204966649435}
   m_Layer: 9
-  m_Name: SuptemeSeeker
+  m_Name: SupremeSeeker
   m_TagString: EnemyWeapons
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
