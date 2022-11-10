@@ -9,11 +9,14 @@ public class Stage : MonoBehaviour
 	private Enemy [] piratePrefabs;
 	private Enemy [] mardarianPrefabs;
 	private Enemy [] supremePrefabs;
-	private Vector2 [][] paths;		// Paths of move.
+	private Vector2 [][] paths;
 	protected System.Action [] stages;
 
 	protected int numCurWave = 0;
 
+	/// <summary>
+	/// Movement paths.
+	/// </summary>
 	public Vector2 [][] Paths { get => paths; set => paths = value; }
 	public Enemy [] CyberPrefabs { get => cyberPrefabs; set => cyberPrefabs = value; }
 	public Enemy [] PiratePrefabs { get => piratePrefabs; set => piratePrefabs = value; }
@@ -47,7 +50,7 @@ public class Stage : MonoBehaviour
 
 	void Start()
 	{
-		InvokeRepeating("checkWave", 0, 4);
+		InvokeRepeating("CheckWave", 0, 4);
 	}
 
 	/// <summary>
@@ -97,14 +100,18 @@ public class Stage : MonoBehaviour
 		}
 	}
 
-	// Instance of patrol ship.
+	/// <summary>
+	/// Instance of patrol ship.
+	/// </summary>
 	protected void InstShip(Enemy prefab, Vector2 startPoint, Vector2[] patrolPath, bool isMovingForward, bool mirror)
 	{
 		Vector2[] path = { startPoint };
 		InstShip(prefab, path, mirror, patrolPath, isMovingForward);
 	}
 
-	// Instance of ship moving along path with stoping in lastpoint
+	/// <summary>
+	/// Instance of ship moving along path with stoping in lastpoint
+	/// </summary>
 	protected void InstShip(Enemy prefab, Vector2 lastPoint, Vector2[] path, bool mirror = true)
 	{
 		Vector2[] tmpPath = (Vector2[])path.Clone();
@@ -233,7 +240,7 @@ public class Stage : MonoBehaviour
 	/// Check for enemies.
 	/// If scene clear, start next wave.
 	/// </summary>
-	private void checkWave()
+	private void CheckWave()
 	{
 		if (GameObject.FindGameObjectsWithTag("Enemy").Length == 0)
 		{

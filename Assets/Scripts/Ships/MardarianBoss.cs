@@ -1,34 +1,29 @@
 using UnityEngine;
+using System.Collections;
 
 public class MardarianBoss : EnemyBoss
 {
-	protected override void Start()
+    protected override void DefaultSetup()
 	{
-		base.Start();
 		stopPoint = new Vector2(0, 2.7f);
-	}
+		base.DefaultSetup();
+    }
 
-	protected override void StartWeaponOne()
+	protected override IEnumerator StartWeaponOne()
 	{
 		StartWeapon("WeaponOne");
-		Invoke("StopWeaponOne", 15);
-	}
-
-	protected void StopWeaponOne()
-	{
+		yield return new WaitForSeconds(15);
 		StopWeapon("WeaponOne");
-		Invoke("StartWeaponTwo", 2);
+		yield return new WaitForSeconds(2);
+		StartCoroutine(StartWeaponTwo());
 	}
 
-	protected void StartWeaponTwo()
+	protected IEnumerator StartWeaponTwo()
 	{
 		StartWeapon("WeaponTwo");
-		Invoke("StopWeaponTwo", 15);
-	}
-
-	protected void StopWeaponTwo()
-	{
+		yield return new WaitForSeconds(15);
 		StopWeapon("WeaponTwo");
-		Invoke("StartWeaponOne", 2);
+		yield return new WaitForSeconds(2);
+		StartCoroutine(StartWeaponOne());
 	}
 }

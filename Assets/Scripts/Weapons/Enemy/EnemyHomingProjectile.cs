@@ -6,7 +6,7 @@ public class EnemyHomingProjectile : HomingProjectile
 
 	void Awake()
 	{
-		target = GeneralFunctions.targetSearch(targetTag, this.transform.position);
+		target = GeneralFunctions.TargetSearch(targetTag, this.transform.position);
 	}
 
 	protected override void Move()

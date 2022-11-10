@@ -2,7 +2,7 @@ using UnityEngine;
 
 public static class GeneralFunctions
 {
-	public static float heightControllerSquare;
+	public static float heightControllerSquare = 0;
 
 	public static float AngleRotateToPoint(Vector3 posObject, Vector3 posTarget)
 	{
@@ -11,7 +11,7 @@ public static class GeneralFunctions
 		return angle;
 	}
 
-	public static GameObject targetSearch(string targetTag, Vector3 position)
+	public static GameObject TargetSearch(string targetTag, Vector3 position)
 	{
 		GameObject target = null;
 		GameObject [] enemys = GameObject.FindGameObjectsWithTag(targetTag);

@@ -1,23 +1,26 @@
 using UnityEngine;
+using System.Collections;
 
 public class OrbitShip : Player
 {
-	protected override void Start()
-	{
-		base.Start();
+	Transform drons;
+
+	private void Awake()
+    {
+		drons = this.transform.Find("Drons");
 	}
 
-	public override void MoveBorders()
+    public override void MoveBorders()
 	{
 		float widthObject = this.gameObject.transform.GetChild(1).GetComponent<MeshRenderer>().bounds.size.x / 2;
 		float heightObject = this.GetComponent<MeshRenderer>().bounds.size.y / 2;
 		GeneralFunctions.GetBoard(heightObject, widthObject, ref xMin, ref xMax, ref yMin, ref yMax);
 	}
 
-	public override void StartWeaponOne()
+	public override IEnumerator StartWeaponOne()
 	{
 		int numDrons = GameData.lvlOne;
-		Transform drons = this.transform.Find("Drons");
+		
 
 		for (int i = 0; i < numDrons; ++i)
 		{
@@ -28,12 +31,12 @@ public class OrbitShip : Player
 			}
 			Transform dron = drons.GetChild(i);
 			dron.gameObject.SetActive(true);
-
+			yield return new WaitForEndOfFrame();
 			dron.GetComponent<SimpleWeapons>().StartWeapon();
 		}
 	}
 
-	public override void StartWeaponTwo()
+	public override IEnumerator StartWeaponTwo()
 	{
 		int numTurrets = GameData.lvlTwo;
 		Transform orbit = this.transform.Find("Orbit");
@@ -45,6 +48,7 @@ public class OrbitShip : Player
 			Transform turretStand = orbit.GetChild(i);
 			turretStand.gameObject.SetActive(true);
 
+			yield return new WaitForEndOfFrame();
 			Turret turret = turretStand.GetChild(0).GetComponent<Turret>();
 			turret.StartWeapon();
 		}
@@ -52,7 +56,7 @@ public class OrbitShip : Player
 
 	public override void StopWeaponOne()
 	{
-		Transform drons = this.transform.Find("Drons");
+		drons = this.transform.Find("Drons");
 
 		for (int i = 0; i < drons.childCount; ++i)
 		{
@@ -72,7 +76,7 @@ public class OrbitShip : Player
 		}
 	}
 
-	public override void StartWeaponThree()
+	public override IEnumerator StartWeaponThree()
 	{
 		int numTurrets = GameData.lvlTwo;
 		Transform orbit = this.transform.Find("Orbit");
@@ -84,26 +88,24 @@ public class OrbitShip : Player
 			if (turretStand.gameObject.activeSelf)
 			{
 				Turret turret = turretStand.GetChild(0).GetComponent<Turret>();
-				turret.Hurricane();
+				turret.StartHurricane();
 			}
 		}
+		yield break;
 	}
 
-	public override void StartWeaponFour()
+	public override IEnumerator StartWeaponFour()
 	{
-		this.transform.Find("AnnihilatorLaser").gameObject.SetActive(true);
-		Invoke("StopWeaponFour", 2);
-	}
-
-	public void StopWeaponFour()
-	{
-		this.transform.Find("AnnihilatorLaser").gameObject.SetActive(false);
+		var annihilator = this.transform.Find("AnnihilatorLaser").gameObject;
+		annihilator.SetActive(true);
+		yield return new WaitForSeconds(2);
+		annihilator.SetActive(false);
 	}
 
 	public override void StartWeapons()
 	{
-		StartWeaponOne();
-		StartWeaponTwo();
+		StartCoroutine(StartWeaponOne());
+		StartCoroutine(StartWeaponTwo());
 	}
 
 	public override void StopWeapons()

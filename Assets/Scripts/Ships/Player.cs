@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
@@ -26,8 +27,13 @@ public class Player : MonoBehaviour {
 	public System.Action ChangeLifes { get => changeLifes; set => changeLifes = value; }
 	public Action<string> AddEnergy { get => addEnergy; set => this.addEnergy = value; }
 
-	protected virtual void Start()
+	protected void Start()
 	{
+		DefaultSetup();
+	}
+
+	protected virtual void DefaultSetup()
+    {
 		MoveBorders();
 	}
 
@@ -95,12 +101,14 @@ public class Player : MonoBehaviour {
 		immortal = false;
 	}
 
-	public virtual void StartWeaponOne() { }
-	public virtual void StartWeaponTwo() { }
-	public virtual void StartWeaponThree() { }
-	public virtual void StartWeaponFour() { }
+	public virtual IEnumerator StartWeaponOne() { yield break; }
+	public virtual IEnumerator StartWeaponTwo() { yield break; }
+	public virtual IEnumerator StartWeaponThree() { yield break; }
+	public virtual IEnumerator StartWeaponFour() { yield break; }
 	public virtual void StartWeapons() { }
 	public virtual void StopWeapons() { }
 	public virtual void StopWeaponOne() { }
 	public virtual void StopWeaponTwo() { }
+	public virtual void StopWeaponThree() { }
+	public virtual void StopWeaponFour() { }
 }

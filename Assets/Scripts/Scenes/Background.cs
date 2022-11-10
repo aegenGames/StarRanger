@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Background : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class Background : MonoBehaviour
 
     void Start()
     {
-        height = this.GetComponent<SpriteRenderer>().bounds.size.y;
+        height = this.GetComponent<RectTransform>().sizeDelta.y * 2;
     }
 
     void Update()
@@ -18,9 +19,9 @@ public class Background : MonoBehaviour
 
     public void Move()
     {
-        if (this.transform.position.y <= -height)
+        if (this.transform.localPosition.y <= -height)
         {
-            this.transform.position = new Vector3(this.transform.position.x, height, this.transform.position.z);
+            this.transform.localPosition = new Vector3(this.transform.position.x, height, this.transform.position.z);
         }
         this.transform.position -= this.transform.up * speed * Time.deltaTime;
     }

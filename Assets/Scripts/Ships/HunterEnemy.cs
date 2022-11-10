@@ -1,19 +1,16 @@
 using UnityEngine;
+using System.Collections;
 
 public class HunterEnemy : EnemyMinions
 {
 	private bool isHunting = false;
 	private GameObject target;
 
-	protected override void Start()
+    protected override void DefaultSetup()
 	{
 		target = GameObject.FindGameObjectWithTag("Player");
-	}
-
-	void Update()
-	{
-		Move();
-	}
+		base.DefaultSetup();
+    }
 
 	protected override void Move()
 	{
@@ -27,13 +24,9 @@ public class HunterEnemy : EnemyMinions
 		}
 	}
 
-	private void switchMove()
+	public IEnumerator CallSwitch(float delay)
 	{
+		yield return new WaitForSeconds(delay);
 		isHunting = true;
-	}
-
-	public void callSwitch(float delay)
-	{
-		Invoke("switchMove", delay);
 	}
 }

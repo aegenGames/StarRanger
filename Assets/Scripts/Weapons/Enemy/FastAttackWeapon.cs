@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 
 /// <summary>
@@ -6,24 +7,15 @@ using UnityEngine;
 /// </summary>
 public class FastAttackWeapon : SimpleWeapons
 {
-	[SerializeField] private int numberAttack = 3;  // Number of attacks before next volley.
+	[SerializeField] private int attackCount = 3;  // Number of attacks before next volley.
 	[SerializeField] private float intervalAttack = 0.3f;  // Interval bw attacks.
 
-	private int attackNum = 0;	// Attack number.
-
-	public override void Weapon()
+    public override IEnumerator Shot()
 	{
-		InvokeRepeating("AttackWave", 0, intervalAttack);
-	}
-
-	private void AttackWave()
-	{
-		base.Weapon();
-		++attackNum;
-		if (attackNum >= numberAttack)
+		for (int i = 0; i < attackCount; ++i)
 		{
-			attackNum = 0;
-			CancelInvoke("AttackWave");
+			StartCoroutine(base.Shot());
+			yield return new WaitForSeconds(intervalAttack);
 		}
 	}
 }

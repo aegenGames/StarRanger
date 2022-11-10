@@ -1,60 +1,49 @@
 using UnityEngine;
+using System.Collections;
 
 public class SupremeBoss : EnemyBoss
 {
-    protected override void Start()
+    protected override void DefaultSetup()
     {
-        base.Start();
         stopPoint = new Vector2(0, 3);
+        base.DefaultSetup();
     }
 
-    protected override void StartWeaponOne()
+
+    protected override IEnumerator StartWeaponOne()
     {
         StartWeapon("WeaponOne");
-        Invoke("StopWeaponOne", 15);
-    }
-
-    protected void StopWeaponOne()
-    {
+        yield return new WaitForSeconds(15);
         StopWeapon("WeaponOne");
-        Invoke("StartWeaponTwo", 2);
+        yield return new WaitForSeconds(2);
+        StartCoroutine(StartWeaponTwo());
     }
 
-    protected  void StartWeaponTwo()
+    protected IEnumerator StartWeaponTwo()
     {
         StartWeapon("WeaponTwo");
-        Invoke("StopWeaponTwo", 15);
-    }
-
-    protected void StopWeaponTwo()
-    {
+        yield return new WaitForSeconds(15);
         StopWeapon("WeaponTwo");
-        Invoke("StartWeaponThree", 2);
+        yield return new WaitForSeconds(2);
+        StartCoroutine(StartWeaponThree());
     }
 
-    protected  void StartWeaponThree()
+    protected IEnumerator StartWeaponThree()
     {
         StartWeapon("WeaponThree");
-        Invoke("StopWeaponThree", 10);
-    }
-
-    protected void StopWeaponThree()
-    {
+        yield return new WaitForSeconds(10);
         StopWeapon("WeaponThree");
-        Invoke("StartWeaponFour", 2);
+        yield return new WaitForSeconds(2);
+        StartCoroutine(StartWeaponFour());
     }
 
-    protected  void StartWeaponFour()
+    protected IEnumerator StartWeaponFour()
     {
         Transform weapons = this.transform.Find("WeaponFour");
         weapons.GetChild(0).GetComponent<SummonerWeapon>().StartWeapon();
-        Invoke("StopWeaponFour", 14);
-    }
-
-    protected void StopWeaponFour()
-    {
-        Transform weapons = this.transform.Find("WeaponFour");
+        yield return new WaitForSeconds(14);
         weapons.GetChild(0).GetComponent<SummonerWeapon>().StopWeapon();
-        Invoke("StartWeaponOne", 2);
+        yield return new WaitForSeconds(2);
+        StartCoroutine(StartWeaponOne());
     }
 }

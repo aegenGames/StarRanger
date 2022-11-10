@@ -8,7 +8,7 @@ public class PlayerHomingProjectile : HomingProjectile, IDmg
 	{
 		if (!target)
 		{
-			target = GeneralFunctions.targetSearch(targetTag, this.transform.position);
+			target = GeneralFunctions.TargetSearch(targetTag, this.transform.position);
 		}
 		base.Move();
 	}

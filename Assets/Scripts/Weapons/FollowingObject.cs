@@ -7,7 +7,7 @@ public class FollowingObject : MonoBehaviour
 	
 	void Start()
 	{
-		target = GeneralFunctions.targetSearch(targetTag, this.transform.position);
+		target = GeneralFunctions.TargetSearch(targetTag, this.transform.position);
 	}
 
 	void Update()

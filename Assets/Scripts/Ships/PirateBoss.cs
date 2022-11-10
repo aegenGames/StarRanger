@@ -1,16 +1,18 @@
 using UnityEngine;
+using System.Collections;
 
 public class PirateBoss : EnemyBoss
 {
-	protected override void Start()
+    protected override void DefaultSetup()
 	{
-		base.Start();
 		stopPoint = new Vector2(0, 3);
-	}
+		base.DefaultSetup();
+    }
 
-	protected override void StartWeaponOne()
+    protected override IEnumerator StartWeaponOne()
 	{
 		StartWeapon("WeaponOne");
 		StartWeapon("WeaponTwo");
+		yield break;
 	}
 }

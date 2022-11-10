@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class SimpleWeapons : MonoBehaviour, IWeapon
 {
@@ -7,22 +8,42 @@ public class SimpleWeapons : MonoBehaviour, IWeapon
 
 	public Ammunition Prefab { get => prefab; set => prefab = value; }
 
-	public virtual void Weapon()
+    void Awake()
+    {
+		AwakeSettup();
+	}
+
+	protected virtual void AwakeSettup()
+    {
+	}
+
+    public virtual IEnumerator Weapon()
 	{
+		yield return new WaitForSeconds(0.4f);
+		while (true)
+		{
+			yield return StartCoroutine(Shot());
+			yield return new WaitForSeconds(repeatRate);
+		}
+	}
+
+	public virtual IEnumerator Shot()
+    {
 		Instantiate(this.Prefab, this.transform.position, this.transform.rotation);
+		yield break;
 	}
 
 	public virtual void StartWeapon()
 	{
-		InvokeRepeating("Weapon", 0.4f, repeatRate);
+		StartCoroutine("Weapon");
 	}
 
 	public void StopWeapon()
 	{
-		CancelInvoke("Weapon");
+		StopCoroutine("Weapon");
 	}
 
-	public void restartWeapon()
+	public void RestartWeapon()
 	{
 		StopWeapon();
 		StartWeapon();

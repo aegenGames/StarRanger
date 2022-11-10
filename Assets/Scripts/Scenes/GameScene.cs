@@ -12,7 +12,8 @@ public class GameScene : MonoBehaviour
 	[SerializeField] private Enemy [] mardarianPrefabs;
 	[SerializeField] private Enemy [] supremePrefabs;
 	[SerializeField] private BGCurve [] curvepaths;     // Curves for move ships.
-	[SerializeField] private GameObject description;	// Descriptions for skills.
+	[SerializeField] private GameObject description;    // Descriptions for skills.
+	[SerializeField] private Image background;
 
 	Stage currentStage = null;
 	private Vector2 [][] paths;     // Paths for move ships.
@@ -21,7 +22,6 @@ public class GameScene : MonoBehaviour
 
 	void Start()
 	{
-		GeneralFunctions.heightControllerSquare = GameObject.Find("SquarePanel").GetComponent<SpriteRenderer>().bounds.size.y;
 		if (paths == null)
 		{
 			GetCurvesPath();
@@ -133,6 +133,7 @@ public class GameScene : MonoBehaviour
 	public void PlayAgain()
 	{
 		clearScene();
+		player.gameObject.SetActive(true);
 
 		Transform endGame = this.transform.Find("EndGame");
 		endGame.gameObject.SetActive(false);
@@ -143,7 +144,6 @@ public class GameScene : MonoBehaviour
 		player.StopWeapons();
 		player.StartWeapons();
 		player.transform.position = new Vector2(0, -4);
-		player.gameObject.SetActive(true);
 		player.NumLifes = 3;
 		ChangeLifes();
 
@@ -189,7 +189,7 @@ public class GameScene : MonoBehaviour
 		GameObject textObject = description.transform.Find("Dron").gameObject;
 		textObject.SetActive(!textObject.activeSelf);
 
-		int price = 7500;
+		int price = 5000;
 		if (tg.isOn)
 		{
 			++GameData.lvlOne;
@@ -203,7 +203,7 @@ public class GameScene : MonoBehaviour
 		}
 
 		player.StopWeaponOne();
-		player.StartWeaponOne();
+		StartCoroutine(player.StartWeaponOne());
 	}
 
 	public void UpLaserDmg(Toggle tg)
@@ -211,7 +211,7 @@ public class GameScene : MonoBehaviour
 		GameObject textObject = description.transform.Find("UpLaserDmg").gameObject;
 		textObject.SetActive(!textObject.activeSelf);
 
-		int price = 5000;
+		int price = 7500;
 		if (tg.isOn)
 			GameData.dmgOne += 25;
 		else if ((!isBuy) || (price > GameData.credits))
@@ -234,7 +234,7 @@ public class GameScene : MonoBehaviour
 		GameObject textObject = description.transform.Find("Rocket").gameObject;
 		textObject.SetActive(!textObject.activeSelf);
 
-		int price = 10000;
+		int price = 5000;
 		if (tg.isOn)
 			++GameData.lvlTwo;
 		else if ((!isBuy) || (price > GameData.credits))
@@ -257,7 +257,7 @@ public class GameScene : MonoBehaviour
 		}
 
 		player.StopWeaponTwo();
-		player.StartWeaponTwo();
+		StartCoroutine(player.StartWeaponTwo());
 	}
 
 	public void UpRocketDmg(Toggle tg)
@@ -272,7 +272,7 @@ public class GameScene : MonoBehaviour
 			textObject.SetActive(!textObject.activeSelf);
 		}
 
-		int price = 5000;
+		int price = 10000;
 		if (tg.isOn)
 			GameData.dmgTwo += 50;
 		else if ((!isBuy) || (price > GameData.credits))
@@ -299,7 +299,7 @@ public class GameScene : MonoBehaviour
 
 			int price = 20000;
 			if (tg.isOn)
-				player.StartWeaponFour();
+				StartCoroutine(player.StartWeaponFour());
 			else if ((isBuy) && (price < GameData.credits))
 			{
 				this.transform.Find("UserInterface").Find("Controller").Find("Annihilator").gameObject.SetActive(true);
@@ -314,7 +314,7 @@ public class GameScene : MonoBehaviour
 	{
 		if (bt.GetComponent<Image>().fillAmount < 1)
 			return;
-		player.StartWeaponFour();
+		StartCoroutine(player.StartWeaponFour());
 		bt.GetComponent<Image>().fillAmount = 0;
 	}
 
@@ -334,7 +334,7 @@ public class GameScene : MonoBehaviour
 			int price = 30000;
 
 			if (tg.isOn)
-				player.StartWeaponThree();
+				StartCoroutine(player.StartWeaponThree());
 			else if ((isBuy) && (price < GameData.credits))
 			{
 				this.transform.Find("UserInterface").Find("Controller").Find("Hurricane").gameObject.SetActive(true);
@@ -349,7 +349,7 @@ public class GameScene : MonoBehaviour
 	{
 		if (bt.GetComponent<Image>().fillAmount < 1)
 			return;
-		player.StartWeaponThree();
+		StartCoroutine(player.StartWeaponThree());
 		bt.GetComponent<Image>().fillAmount = 0;
 	}
 
@@ -366,6 +366,7 @@ public class GameScene : MonoBehaviour
 		Destroy(currentStage.gameObject);
 		Transform endGame = this.transform.Find("EndGame");
 		endGame.gameObject.SetActive(true);
+		background.raycastTarget = false;
 		if (player.gameObject.activeSelf)
 			endGame.Find("Win").gameObject.SetActive(true);
 		else

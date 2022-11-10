@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 
 /// <summary>
@@ -7,8 +8,8 @@ using UnityEngine;
 /// </summary>
 public class S : SimpleWeapons
 {
-	public override void Weapon()
-	{
+    public override IEnumerator Shot()
+    {
 		int amount = 7;
 		Vector3 targetPoint = new Vector3(1, -1);
 		for (int i = 0; i <= amount; ++i)
@@ -17,5 +18,6 @@ public class S : SimpleWeapons
 			Instantiate(this.Prefab, this.transform.position, Quaternion.Euler(0, 0, angle));
 			targetPoint.x -= 2f / amount;
 		}
+		yield break;
 	}
 }

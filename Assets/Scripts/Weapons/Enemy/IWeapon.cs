@@ -1,8 +1,9 @@
 using UnityEngine;
+using System.Collections;
 
 interface IWeapon
 {
-	public void Weapon();
+	public IEnumerator Weapon();
 	public void StartWeapon();
 	public void StopWeapon();
 }

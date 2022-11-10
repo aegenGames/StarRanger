@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class EnemyMinions : Enemy
 {
@@ -7,11 +8,6 @@ public class EnemyMinions : Enemy
 	private int curIndexMovePoint = 0;
 	private int curIndexPatrolPoint = 0;
 	private bool moveForward = true;
-
-	protected override void Start()
-	{
-		base.Start();
-	}
 
 	public Vector2 [] PathMove
 	{

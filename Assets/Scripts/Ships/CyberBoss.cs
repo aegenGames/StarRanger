@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class CyberBoss : EnemyBoss
 {
@@ -6,19 +7,18 @@ public class CyberBoss : EnemyBoss
 	private int curPatrolIndex = 0;
 	private Vector3[] patrolPoints;
 
-	protected override void Start()
-	{
-		base.Start();
-		
+    protected override void DefaultSetup()
+    {
 		float posY = 3.7f;
 		float posX = 1.6f;
 		stopPoint = new Vector2(0, posY);
 		patrolPoints = new Vector3[2];
 		patrolPoints[0] = new Vector2(-posX, posY);
 		patrolPoints[1] = new Vector2(posX, posY);
+		base.DefaultSetup();
 	}
 
-	void Update()
+    void Update()
 	{
 		if (isPatrolling)
 			MovePatrol();
@@ -40,41 +40,32 @@ public class CyberBoss : EnemyBoss
 			curPatrolIndex = 1 - curPatrolIndex;
 	}
 
-	protected override void StartWeaponOne()
+	protected override IEnumerator StartWeaponOne()
 	{
 		StartWeapon("WeaponOne");
-		Invoke("StopWeaponOne", 15);
-	}
-
-	protected void StopWeaponOne()
-	{
+		yield return new WaitForSeconds(15);
 		StopWeapon("WeaponOne");
-		Invoke("StartWeaponTwo", 3);
+		yield return new WaitForSeconds(3);
+		StartCoroutine(StartWeaponTwo());
 	}
 
-	protected void StartWeaponTwo()
+	protected IEnumerator StartWeaponTwo()
 	{
 		StartWeapon("WeaponTwo");
-		Invoke("StopWeaponTwo", 15);
-	}
-
-	protected void StopWeaponTwo()
-	{
+		yield return new WaitForSeconds(15);
 		StopWeapon("WeaponTwo");
-		Invoke("StartWeaponThree", 4);
+		yield return new WaitForSeconds(4);
+		StartCoroutine(StartWeaponThree());
 	}
 
-	protected void StartWeaponThree()
+	protected IEnumerator StartWeaponThree()
 	{
 		this.transform.Find("WeaponThree").gameObject.SetActive(true);
-		Invoke("StopWeaponThree", 12.5f);
 		isPatrolling = true;
-	}
-
-	protected void StopWeaponThree()
-	{
+		yield return new WaitForSeconds(12.5f);
 		this.transform.Find("WeaponThree").gameObject.SetActive(false);
-		Invoke("StartWeaponOne", 2);
 		isPatrolling = false;
+		yield return new WaitForSeconds(2);
+		StartCoroutine(StartWeaponOne());
 	}
 }

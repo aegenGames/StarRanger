@@ -1,17 +1,18 @@
 using UnityEngine;
+using System.Collections;
 
 public class EnemyBoss : Enemy
 {
 	protected bool isMoved = true;
 	protected Vector2 stopPoint;
 
-	protected override void Start()
-	{
-		base.Start();
+    protected override void DefaultSetup()
+    {
 		this.transform.position = new Vector2(0, 8);
+		base.DefaultSetup();
 	}
 
-	protected override void Move()
+    protected override void Move()
 	{
 		if (isMoved)
 		{
@@ -19,12 +20,12 @@ public class EnemyBoss : Enemy
 			if ((this.transform.position.y - stopPoint.y) < Mathf.Pow(10, -3))
 			{
 				isMoved = false;
-				StartWeaponOne();
+				StartCoroutine(StartWeaponOne());
 			}
 		}
 	}
 
-	protected virtual void StartWeaponOne() { }
+	protected virtual IEnumerator StartWeaponOne() { yield break; }
 
 	protected void StartWeapon(string nameObject)
 	{

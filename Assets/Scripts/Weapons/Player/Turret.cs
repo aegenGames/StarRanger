@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 
 /// <summary>
@@ -7,14 +8,13 @@ using UnityEngine;
 /// </summary>
 public class Turret : SimpleWeapons
 {
-	private float coefSpeedUp = 1;
 	private int numberRocket = 0;
-	private int hurWaveNum = 0;  // Rocket wave number when using ultimate
-	private bool hurricaneIsReady = true;
+	private bool startHurricane = false;
 	private Ammunition [] rocketPool;
 
-	void Start()
-	{
+    protected override void AwakeSettup()
+    {
+        base.AwakeSettup();
 		rocketPool = new Ammunition[20];
 		for (int i = 0; i < rocketPool.Length; ++i)
 		{
@@ -24,9 +24,44 @@ public class Turret : SimpleWeapons
 		}
 	}
 
-	public override void Weapon()
+    public void StartHurricane()
+    {
+		if (startHurricane)
+			return;
+
+		startHurricane = true;
+		RestartWeapon();
+    }
+
+	public override IEnumerator Weapon()
 	{
-		while(rocketPool[numberRocket].gameObject.activeSelf)
+		float HurricaneSpeedUp = 4;
+		int hurricaneWavesCount = 14;
+		while (true)
+		{
+			if (startHurricane)
+			{
+				ChangeRocketSpeed(HurricaneSpeedUp);
+				for (int i = 0; i < hurricaneWavesCount; ++i)
+				{
+					StartCoroutine(Shot());
+					yield return new WaitForSeconds(repeatRate / (HurricaneSpeedUp * 4));
+				}
+				ChangeRocketSpeed(1 / HurricaneSpeedUp);
+				startHurricane = false;
+				yield return new WaitForSeconds(2);
+			}
+			else
+			{
+				StartCoroutine(Shot());
+				yield return new WaitForSeconds(repeatRate);
+			}
+        }
+	}
+	
+    public override IEnumerator Shot()
+    {
+		while (rocketPool[numberRocket].gameObject.activeSelf)
 		{
 			++numberRocket;
 			if (numberRocket == rocketPool.Length)
@@ -35,48 +70,14 @@ public class Turret : SimpleWeapons
 		Vector2 pos = this.GetComponent<MeshRenderer>().bounds.center;
 		rocketPool[numberRocket].transform.position = pos;
 		rocketPool[numberRocket].gameObject.SetActive(true);
-
-		if (coefSpeedUp > 1)
-			++hurWaveNum;
-		if(hurWaveNum == 14)
-		{
-			Hurricane();
-		}
+		yield break;
 	}
 
-	/// <summary>
-	/// Ultimate skill.
-	/// Increase speed and start frequency of rockets.
-	/// </summary>
-	public void Hurricane()
+	public void ChangeRocketSpeed(float coefSpeedUp)
 	{
-		float coef = 5;
-		if (hurricaneIsReady && (hurWaveNum == 0))
-		{
-			coefSpeedUp = coef;
-			repeatRate /= coef * 4;
-			restartWeapon();
-			changeRocketSpeed();
-			hurricaneIsReady = !hurricaneIsReady;
-		}
-		else if(!hurricaneIsReady && (hurWaveNum == 14))
-		{
-			coefSpeedUp = 1f / coef;
-			repeatRate *= coef * 4;
-			StopWeapon();
-			Invoke("StartWeapon", 2);
-			Invoke("changeRocketSpeed", 2);
-			hurricaneIsReady = !hurricaneIsReady;
-		}
-	}
-
-	public void changeRocketSpeed()
-	{
-		float curSpeed = rocketPool[numberRocket].Speed * coefSpeedUp;
 		for (int i = 0; i < rocketPool.Length; ++i)
 		{
-			rocketPool[i].Speed = curSpeed;
+			rocketPool[i].Speed = rocketPool[i].Speed * coefSpeedUp;
 		}
-		hurWaveNum = 0;
 	}
 }

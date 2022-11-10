@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 
 /// <summary>
@@ -11,7 +12,7 @@ public class SummonerWeapon : MonoBehaviour, IWeapon
 	[SerializeField] private float delayTime = 0;
 	[SerializeField] protected float repeatRate = 3;
 
-	public void Weapon()
+	public IEnumerator Weapon()
 	{
 		for (int i = 0; i < numSummons; ++i)
 		{
@@ -20,17 +21,18 @@ public class SummonerWeapon : MonoBehaviour, IWeapon
 			float angle = GeneralFunctions.AngleRotateToPoint(Vector3.zero, new Vector3(x, y));
 
 			HunterEnemy enemy = Instantiate(this.prefabEnemy, this.transform.position, Quaternion.Euler(0, 0, angle));
-			enemy.callSwitch(delayTime);
+			StartCoroutine(enemy.CallSwitch(delayTime));
 		}
+		yield break;
 	}
 
 	public virtual void StartWeapon()
 	{
-		InvokeRepeating("Weapon", 0.4f, repeatRate);
+		StartCoroutine("Weapon");
 	}
 
 	public void StopWeapon()
 	{
-		CancelInvoke("Weapon");
+		StopCoroutine("Weapon");
 	}
 }

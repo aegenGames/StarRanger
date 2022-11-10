@@ -11,8 +11,13 @@ public class Enemy : MonoBehaviour
 
 	public int Hp { get => hp; set => hp = value; }
 
-	protected virtual void Start()
+	protected void Start()
 	{
+		DefaultSetup();
+	}
+
+	protected virtual void DefaultSetup()
+    {
 		credits = hp / 10;
 	}
 
@@ -33,8 +38,7 @@ public class Enemy : MonoBehaviour
 		{
 			if (shotAnnihilator)
 				return;
-			else
-				shotAnnihilator = true;
+			shotAnnihilator = true;
 		}
 
 		Hp -= obj.GetComponent<IDmg>().Dmg;
